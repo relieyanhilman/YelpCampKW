@@ -33,7 +33,6 @@ module.exports.postNewCamp = async (req, res, next) => {
   await kemahBaru.save();
   req.flash('success', 'yes berhasil nambah kemah');
   res.redirect(`/perkemahan/${kemahBaru._id}`);
-  console.log(kemahBaru.gambar);
 }
 
 module.exports.editCampForm = async (req, res) => {

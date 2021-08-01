@@ -1,7 +1,8 @@
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config();
-// }
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+
 
 
 const express = require('express')
@@ -20,10 +21,7 @@ const User = require('./models/users');
 const multer = require('multer');
 const db_url =process.env.DB_URL || 'mongodb://localhost:27017/berkemahSkuy';
 const MongoDBStore = require('connect-mongo');
-const secret =process.env.SECRET || 'beyblade gila';
-
-
-
+const secret =process.env.SECRET || 'beybladegila';
 
 
 const KemahRouter = require('./routes/perkemahan')
@@ -50,7 +48,7 @@ app.use(flash());
 
 const store = MongoDBStore.create({
   mongoUrl: db_url,
-  secret:secret,
+  secret,
   touchAfter: 60 * 60 *24
 })
 
@@ -65,14 +63,14 @@ const sessionConfig = {
   name: 'session',
   resave: false,
   saveUninitialized: true,
-  secret: secret,
+  secret,
   cookie: {
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7
 
   }
-}
+};
 
 app.use(session(sessionConfig))
 
@@ -105,17 +103,20 @@ app.use('/perkemahan/:id/reviews', ReviewRouter);
 app.use('/', UserRouter)
 
 
-app.get('/', catchAsync(async (req, res) => {
-  const camp = new Perkemahan({
-    judul: 'gunung agung',
-    harga: 2600000,
-    deskripsi: 'perkemahan yang sangat asyik',
-    lokasi: 'Bali'
-  })
-  await camp.save();
-  console.log(camp);
-  res.send(camp);
-}))
+// app.get('/', catchAsync(async (req, res) => {
+//   const camp = new Perkemahan({
+//     judul: 'gunung agung',
+//     harga: 2600000,
+//     deskripsi: 'perkemahan yang sangat asyik',
+//     lokasi: 'Bali'
+//   })
+//   await camp.save();
+//   console.log(camp);
+//   res.send(camp);
+// }))
+app.get('/', (req, res) => {
+  res.redirect('/perkemahan');
+})
 
 
 
