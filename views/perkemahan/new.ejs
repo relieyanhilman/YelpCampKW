@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate') %>
+
+
+  <div class="row">
+    <h1 class="text-center">Kemah Baru</h1>
+    <div class="col-6 offset-3">
+
+      <form action="/perkemahan" method="POST" novalidate class="validated-forms" enctype="multipart/form-data">
+
+        <div class='mb-3'>
+          <label class="form-label" for="judul">Judul Kemah </label>
+          <input class="form-control" type="text" required name="kemah[judul]" id="judul">
+          <div class="valid-feedback">
+            Mantap udah keisi!
+          </div>
+        </div>
+
+        <div class='mb-3'>
+          <label class="form-label" for="harga">Harga kemah </label>
+          <div class="input-group">
+
+            <span class="input-group-text" id="price-label">Rp</span>
+            <input class="form-control" type="text" required name="kemah[harga]" id="harga" placeholder="0"
+              aria-describedby="price-label">
+              <div class="valid-feedback">
+                Mantap udah keisi!
+              </div>
+          </div>
+        </div>
+
+        <div class='mb-3'>
+          <label class="form-label" for="lokasi">Lokasi kemah </label>
+          <input class="form-control" type="text" required name="kemah[lokasi]" id="lokasi">
+          <div class="valid-feedback">
+            Mantap udah keisi!
+          </div>
+        </div>
+
+        <!-- <div class='mb-3'>
+          <label class="form-label" for="gambar">Gambar kemah </label>
+          <input class="form-control" type="text" required name="kemah[gambar]" id="gambar">
+          <div class="valid-feedback">
+            Mantap udah keisi!
+          </div>
+        </div> -->
+
+        
+
+          
+
+
+        
+
+        <div class='mb-3'>
+          <label class="form-label" for="deskripsi">Deskripsi </label>
+          <textarea class="form-control" type="text" required name="kemah[deskripsi]" id="deskripsi"></textarea>
+          <div class="valid-feedback">
+            Mantap udah keisi!
+          </div>
+        </div>
+        
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" multiple id="inputGroupFile02" name="image">
+          <label class="input-group-text" for="inputGroupFile02">Upload</label>
+        </div>
+
+        <div class='mb-3'><button class="btn btn-success">Tambah Kemah</button></div>
+
+        <!-- <div class="mb-3">
+          <label for="gambar" class="form-label"></label>
+          <input class="form-control" type="file" multiple id="gambar" name="image" required>
+        </div> -->
+
+        
+
+      </form>
+
+      <a href="/perkemahan">back to main menu</a>
+
+    </div>
+  </div>
