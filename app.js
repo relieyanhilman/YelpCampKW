@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+    require('dotenv').config();
 }
 
 
@@ -19,9 +19,9 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./models/users');
 const multer = require('multer');
-const db_url =process.env.DB_URL || 'mongodb://localhost:27017/berkemahSkuy';
+const db_url = process.env.DB_URL || 'mongodb://localhost:27017/berkemahSkuy';
 const MongoDBStore = require('connect-mongo');
-const secret =process.env.SECRET || 'beybladegila';
+const secret = process.env.SECRET || 'beybladegila';
 
 
 const KemahRouter = require('./routes/perkemahan')
@@ -47,29 +47,29 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(flash());
 
 const store = MongoDBStore.create({
-  mongoUrl: db_url,
-  secret,
-  touchAfter: 60 * 60 *24
+    mongoUrl: db_url,
+    secret,
+    touchAfter: 60 * 60 * 24
 })
 
 store.on("error", () => {
-  console.log('failed to connect session to database');
+    console.log('failed to connect session to database');
 })
 
 
 
 const sessionConfig = {
-  store,
-  name: 'session',
-  resave: false,
-  saveUninitialized: true,
-  secret,
-  cookie: {
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 7
+    store,
+    name: 'session',
+    resave: false,
+    saveUninitialized: true,
+    secret,
+    cookie: {
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7
 
-  }
+    }
 };
 
 app.use(session(sessionConfig))
@@ -83,56 +83,39 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  res.locals.success = req.flash('success');
-  res.locals.error = req.flash('error')
-  next();
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error')
+    next();
 })
 
-// app.get('/fakeUser', async(req, res) => {
-//   const newUser = new User({
-//     email: 'relieyanhilman93@gmail.com',
-//     username: 'relieyanhilman'
-//   });
-//   const userBaru = await User.register(newUser, 'beybladegila');
-//   res.send(userBaru);
-// })
 
 app.use('/perkemahan', KemahRouter);
 app.use('/perkemahan/:id/reviews', ReviewRouter);
 app.use('/', UserRouter)
 
 
-// app.get('/', catchAsync(async (req, res) => {
-//   const camp = new Perkemahan({
-//     judul: 'gunung agung',
-//     harga: 2600000,
-//     deskripsi: 'perkemahan yang sangat asyik',
-//     lokasi: 'Bali'
-//   })
-//   await camp.save();
-//   console.log(camp);
-//   res.send(camp);
-// }))
 app.get('/', (req, res) => {
-  res.redirect('/perkemahan');
+    res.redirect('/perkemahan');
 })
 
 
-
 app.all('*', (req, res, next) => {
-  next(new ExpressError('Page tidak ditemukan', 404))
+    next(new ExpressError('Page tidak ditemukan', 404))
 
 })
 
 app.use((err, req, res, next) => {
-  const { statusCode = 500 } = err;
-  if (!err.message) err.message = "oh no, ada yang salah bro"
-  res.status(statusCode).render('perkemahan/error', { err })
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "oh no, ada yang salah bro"
+    res.status(statusCode).render('perkemahan/error', { err })
 })
 
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`server sedang berjalan di port ${port}`)
+// if (process.env.NODE_ENV == "production") {
+//     let port = process.env.PORT
+// } else {
+//     let port = 3000
+// }
+app.listen(port = process.env.NODE_ENV == "production" ? process.env.PORT : 3000, () => {
+    console.log(`server sedang berjalan di port ${port}`)
 })
